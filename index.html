@@ -1,65 +1,121 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Laundry Wallah</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laundry Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 60px;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+        .user-name {
+            font-weight: 500;
+            color: #333;
+        }
+        .hero {
+            display: flex;
+            height: calc(100vh - 60px);
+            background-color: #f8f9fa;
+        }
+        .hero-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #fff;
+        }
+        .hero-left h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .hero-left p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: fit-content;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .hero-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e9ecef;
+        }
+        .hero-right img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+    </style>
 </head>
-<h1>Welcome to Laundry Wallah/ laundry Mart</h1>
 <body>
-    <p>Welcome to Laundry Wallah/laundry Mart,Here, your clothes receive perfect care and professional cleaning.
-Our fast, affordable, and reliable services make your daily routine easier.
-Whether it's regular laundry or delicate fabrics, we handle every garment with extra attention.
-You just relax — we take care of everything!
-<strong> Mart & Laundry Wallah — your new trusted stop for spotless clothes!</strong></p>
-<img src="https://i.pinimg.com/736x/5a/a6/c3/5aa6c3a9a7469de912c559cda3aba5b3.jpg" alt="washing machine" width="400" height="400">
-
-<h4>Our Services</h4>
-<ul>
-    <li>Washing and Drying</li>
-    <li>Ironing</li>
-    <li>Dry cleaning</li>
-    <li>Stain removal</li>
-    <li>Steam ironing</li>
-    <li>Folding and Packaging</li>
-    <li>Pickup and delivery</li>
-</ul>
-<h4>Price List</h4>
-<Table border="">
-    <thead>
-        <tr>
-            <th>Service</th>
-            <th>Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Washing and cleaning</td>
-            <td>$15</td>
-        </tr>
-        <tr>
-            <td>Dry Cleaning</td>
-            <td>$5</td>
-        </tr>
-    </tbody>
-</Table>
-
-<h4>Book Now</h4>
-<form>
-   <label>Name:</label> <br>
-   <input type="text" name="name" required> <br><br>
-
-   <label>Email:</label> <br>
-   <input type="text" name="Email" required> <br><br>
-
-   <label>phone:</label> <br>
-   <input type="tel" name="phone" required> <br><br>
-
-   <input type="submit" value="submit">
-
-   <p>Contact us at: info@laundrymart.com</p>
-
-</form>
-
-
+    <nav>
+        <div class="logo">Laundry Service</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+        <div class="user-name">John Doe</div>
+    </nav>
+    <section class="hero">
+        <div class="hero-left">
+            <h1>Welcome to Our Laundry Service</h1>
+            <p>We provide fast, reliable, and high-quality laundry services to make your life easier. Book now and get your clothes cleaned professionally.</p>
+            <button class="btn">Book a Service Today</button>
+        </div>
+        <div class="hero-right">
+            <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&h=400&fit=crop" alt="Laundry Service Image">
+        </div>
+    </section>
 </body>
 </html>
