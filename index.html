@@ -3,119 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laundry Service</title>
+    <title>Interactive Web Page</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: Arial, sans-serif;
-            height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
             align-items: center;
-            background-color: #fff;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            height: 60px;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
-        .user-name {
-            font-weight: 500;
-            color: #333;
-        }
-        .hero {
-            display: flex;
-            height: calc(100vh - 60px);
-            background-color: #f8f9fa;
-        }
-        .hero-left {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
-            padding: 2rem;
-            background-color: #fff;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-        .hero-left h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        h1 {
+            margin-bottom: 20px;
             color: #333;
         }
-        .hero-left p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #666;
+        .boxes {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
         }
-        .btn {
+        .box {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border: 2px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .box:hover {
+            opacity: 0.8;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
             background-color: #007bff;
-            color: #fff;
-            padding: 1rem 2rem;
+            color: white;
             border: none;
             border-radius: 5px;
-            font-size: 1rem;
             cursor: pointer;
-            width: fit-content;
         }
-        .btn:hover {
+        button:hover {
             background-color: #0056b3;
-        }
-        .hero-right {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #e9ecef;
-        }
-        .hero-right img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: cover;
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">Laundry Service</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#contact">Contact Us</a></li>
-        </ul>
-        <div class="user-name">John Doe</div>
-    </nav>
-    <section class="hero">
-        <div class="hero-left">
-            <h1>Welcome to Our Laundry Service</h1>
-            <p>We provide fast, reliable, and high-quality laundry services to make your life easier. Book now and get your clothes cleaned professionally.</p>
-            <button class="btn">Book a Service Today</button>
-        </div>
-        <div class="hero-right">
-            <img src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&h=400&fit=crop" alt="Laundry Service Image">
-        </div>
-    </section>
+    <h1 id="greeting">Hello</h1>
+    <div class="boxes">
+        <div class="box" id="red">red</div>
+        <div class="box" id="blue">blue</div>
+        <div class="box" id="green">green</div>
+        <div class="box" id="yellow">yellow</div>
+    </div>
+    <input type="text" id="nameInput" placeholder="Enter your name">
+    <button id="greetBtn">Greet</button>
+
+    <script>
+        const greeting = document.getElementById('greeting');
+        const nameInput = document.getElementById('nameInput');
+        const greetBtn = document.getElementById('greetBtn');
+        const redBox = document.getElementById('red');
+        const blueBox = document.getElementById('blue');
+        const greenBox = document.getElementById('green');
+        const yellowBox = document.getElementById('yellow');
+
+        greetBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            if (name) {
+                greeting.textContent = `Hello, ${name}`;
+            } else {
+                greeting.textContent = 'Hello';
+            }
+        });
+
+        redBox.addEventListener('click', () => {
+            redBox.style.backgroundColor = 'red';
+        });
+
+        blueBox.addEventListener('click', () => {
+            blueBox.style.backgroundColor = 'blue';
+        });
+
+        greenBox.addEventListener('click', () => {
+            greenBox.style.backgroundColor = 'green';
+        });
+
+        yellowBox.addEventListener('click', () => {
+            yellowBox.style.backgroundColor = 'yellow';
+        });
+    </script>
 </body>
 </html>
