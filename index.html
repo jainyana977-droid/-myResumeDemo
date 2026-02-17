@@ -1,87 +1,119 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment 6 - Simple Website</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Assignment 7 - ToDo List APIs</title>
     <style>
         body {
-            margin: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
         }
-
-        nav {
-            background-color: #333;
-            padding: 15px;
-        }
-
-        nav a {
+        header {
+            background-color: #2c3e50;
             color: white;
-            text-decoration: none;
-            margin: 0 20px;
-            font-size: 18px;
-            cursor: pointer;
+            padding: 15px;
+            text-align: center;
         }
-
-        nav a:hover {
-            color: yellow;
+        .container {
+            padding: 20px 40px;
         }
-
-        .page {
-            display: none;
-            padding: 50px 20px;
+        h2 {
+            color: #2c3e50;
         }
-
-        .active {
-            display: block;
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-
-        h1 {
-            color: #333;
+        code {
+            background: #eee;
+            padding: 4px 6px;
+            border-radius: 4px;
         }
     </style>
 </head>
-
 <body>
 
-    <nav>
-        <a onclick="showPage('home')">Home</a>
-        <a onclick="showPage('about')">About</a>
-        <a onclick="showPage('contact')">Contact</a>
-    </nav>
+<header>
+    <h1>Assignment 7: Identifying APIs for To-Do List App</h1>
+</header>
 
-    <!-- HOME PAGE -->
-    <div id="home" class="page active">
-        <h1>Welcome to Home Page</h1>
-        <p>This is the Home section of the website.</p>
+<div class="container">
+
+    <div class="section">
+        <h2>Objective</h2>
+        <p>Identify and plan necessary RESTful APIs required for a To-Do List Application.</p>
     </div>
 
-    <!-- ABOUT PAGE -->
-    <div id="about" class="page">
-        <h1>About Page</h1>
-        <p>This website is created as part of Assignment 6.</p>
-        <p>It demonstrates routing and page navigation.</p>
+    <div class="section">
+        <h2>1️⃣ Add Task (CREATE)</h2>
+        <p><strong>Endpoint:</strong> <code>POST /api/tasks</code></p>
+        <p><strong>Request Body:</strong></p>
+        <pre>{
+  "title": "Complete Assignment",
+  "description": "Finish API planning task",
+  "dueDate": "2026-02-20",
+  "status": "pending"
+}</pre>
+        <p><strong>Response:</strong> 201 Created</p>
+        <p><strong>Logic:</strong> Generate unique ID using UUID or auto-increment ID.</p>
     </div>
 
-    <!-- CONTACT PAGE -->
-    <div id="contact" class="page">
-        <h1>Contact Page</h1>
-        <p>Email: example@gmail.com</p>
-        <p>Phone: +91 9876543210</p>
+    <div class="section">
+        <h2>2️⃣ Get All Tasks (READ)</h2>
+        <p><strong>Endpoint:</strong> <code>GET /api/tasks</code></p>
+        <p><strong>Response:</strong> 200 OK</p>
+        <pre>[
+  {
+    "id": 1,
+    "title": "Complete Assignment",
+    "status": "pending"
+  }
+]</pre>
     </div>
 
-    <script>
-        function showPage(pageId) {
-            var pages = document.querySelectorAll(".page");
-            pages.forEach(function(page) {
-                page.classList.remove("active");
-            });
-            document.getElementById(pageId).classList.add("active");
-        }
-    </script>
+    <div class="section">
+        <h2>3️⃣ Update Task (UPDATE)</h2>
+        <p><strong>Endpoint:</strong> <code>PUT /api/tasks/:id</code></p>
+        <p><strong>Request Body:</strong></p>
+        <pre>{
+  "title": "Complete Assignment",
+  "status": "completed"
+}</pre>
+        <p><strong>Response:</strong> 200 OK</p>
+    </div>
+
+    <div class="section">
+        <h2>4️⃣ Delete Task (DELETE)</h2>
+        <p><strong>Endpoint:</strong> <code>DELETE /api/tasks/:id</code></p>
+        <p><strong>Response:</strong> 204 No Content</p>
+    </div>
+
+    <div class="section">
+        <h2>How APIs Fulfill CRUD</h2>
+        <ul>
+            <li>Create → POST</li>
+            <li>Read → GET</li>
+            <li>Update → PUT</li>
+            <li>Delete → DELETE</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Challenges</h2>
+        <ul>
+            <li>Handling authentication</li>
+            <li>Validating request data</li>
+            <li>Handling errors properly</li>
+            <li>Managing database connections</li>
+        </ul>
+    </div>
+
+</div>
 
 </body>
 </html>
