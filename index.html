@@ -1,196 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>To-Do List App</title>
+  <meta charset="UTF-8">
+  <title>Visitor Pass Management System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      display: flex;
-      justify-content: center;
+      background: #eef2f5;
       padding: 20px;
-    }
-
-    .app {
-      background: #fff;
-      width: 100%;
-      max-width: 500px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 20px;
     }
 
-    input, button {
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input, select, button {
+      padding: 8px;
+      margin: 5px 0;
       width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 16px;
     }
 
     button {
-      background: #4CAF50;
+      background: #1976d2;
       color: white;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 4px;
     }
 
     button:hover {
-      background: #43a047;
+      background: #125aa0;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
     }
 
-    li {
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
       background: #f1f1f1;
-      padding: 10px;
-      margin-bottom: 8px;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
 
-    li.completed {
-      text-decoration: line-through;
-      background: #d1ffd6;
+    .badge {
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: white;
+      font-size: 12px;
     }
 
-    .actions button {
-      width: auto;
-      margin-left: 5px;
-      padding: 5px 8px;
-      font-size: 14px;
-    }
-
-    .delete {
-      background: #e53935;
-    }
-
-    .delete:hover {
-      background: #d32f2f;
-    }
-
-    .edit {
-      background: #1e88e5;
-    }
-
-    .edit:hover {
-      background: #1976d2;
-    }
+    .in { background: green; }
+    .out { background: red; }
   </style>
 </head>
 
 <body>
 
-  <div class="app">
-    <h2>To-Do List App</h2>
+<div class="container">
+  <h2>Visitor Pass Management System</h2>
 
-    <input type="text" id="taskInput" placeholder="Enter new task">
-    <button onclick="createTask()">Add Task</button>
+  <h3>Visitor Registration</h3>
+  <input id="name" placeholder="Visitor Name">
+  <input id="phone" placeholder="Phone Number">
+  <input id="purpose" placeholder="Purpose of Visit">
+  <button onclick="registerVisitor()">Generate Pass</button>
 
-    <input type="text" id="searchInput" placeholder="Search task" onkeyup="renderTasks()">
+  <h3>Search Visitor</h3>
+  <input id="search" placeholder="Search by name or phone" onkeyup="render()">
 
-    <ul id="taskList"></ul>
-  </div>
+  <h3>Visitor Passes</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Purpose</th>
+        <th>QR Code</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
 
-  <script>
-    // ===== Simulated Database (localStorage) =====
-    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+<script>
+  // ===== Database Simulation =====
+  let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
 
-    // ===== API FUNCTIONS =====
+  function registerVisitor() {
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const purpose = document.getElementById("purpose").value.trim();
 
-    function getTasks() {
-      return tasks;
+    if (!name || !phone || !purpose) {
+      alert("All fields are required");
+      return;
     }
 
-    function createTask() {
-      const input = document.getElementById("taskInput");
-      const title = input.value.trim();
+    visitors.push({
+      id: Date.now(),
+      name,
+      phone,
+      purpose,
+      status: "OUT"
+    });
 
-      if (!title) {
-        alert("Task cannot be empty");
-        return;
+    save();
+    document.getElementById("name").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("purpose").value = "";
+  }
+
+  function toggleStatus(id) {
+    visitors = visitors.map(v => {
+      if (v.id === id) {
+        v.status = v.status === "IN" ? "OUT" : "IN";
       }
+      return v;
+    });
+    save();
+  }
 
-      tasks.push({
-        id: Date.now(),
-        title,
-        completed: false
+  function render() {
+    const tbody = document.getElementById("tableBody");
+    const search = document.getElementById("search").value.toLowerCase();
+    tbody.innerHTML = "";
+
+    visitors
+      .filter(v =>
+        v.name.toLowerCase().includes(search) ||
+        v.phone.includes(search)
+      )
+      .forEach(v => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${v.name}</td>
+            <td>${v.phone}</td>
+            <td>${v.purpose}</td>
+            <td>QR-${v.id}</td>
+            <td>
+              <span class="badge ${v.status === "IN" ? "in" : "out"}">
+                ${v.status}
+              </span>
+            </td>
+            <td>
+              <button onclick="toggleStatus(${v.id})">
+                Check ${v.status === "IN" ? "Out" : "In"}
+              </button>
+            </td>
+          </tr>
+        `;
       });
+  }
 
-      saveAndRender();
-      input.value = "";
-    }
+  function save() {
+    localStorage.setItem("visitors", JSON.stringify(visitors));
+    render();
+  }
 
-    function updateTask(id) {
-      const newTitle = prompt("Edit task:");
-      if (!newTitle) return;
-
-      tasks = tasks.map(task =>
-        task.id === id ? { ...task, title: newTitle } : task
-      );
-
-      saveAndRender();
-    }
-
-    function toggleStatus(id) {
-      tasks = tasks.map(task =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      );
-
-      saveAndRender();
-    }
-
-    function deleteTask(id) {
-      tasks = tasks.filter(task => task.id !== id);
-      saveAndRender();
-    }
-
-    // ===== UI RENDERING =====
-
-    function renderTasks() {
-      const list = document.getElementById("taskList");
-      const search = document.getElementById("searchInput").value.toLowerCase();
-      list.innerHTML = "";
-
-      getTasks()
-        .filter(task => task.title.toLowerCase().includes(search))
-        .forEach(task => {
-          const li = document.createElement("li");
-          li.className = task.completed ? "completed" : "";
-
-          li.innerHTML = `
-            <span onclick="toggleStatus(${task.id})">${task.title}</span>
-            <div class="actions">
-              <button class="edit" onclick="updateTask(${task.id})">Edit</button>
-              <button class="delete" onclick="deleteTask(${task.id})">Delete</button>
-            </div>
-          `;
-
-          list.appendChild(li);
-        });
-    }
-
-    function saveAndRender() {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-      renderTasks();
-    }
-
-    // Initial load
-    renderTasks();
-  </script>
+  render();
+</script>
 
 </body>
 </html>
