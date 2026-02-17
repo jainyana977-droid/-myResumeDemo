@@ -1,119 +1,295 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>React useFetch Hook</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laundry Service</title>
 
-  <!-- React CDN -->
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
 
-  <style>
-    body {
-      font-family: Arial;
-      background: #111;
-      color: white;
-      text-align: center;
-    }
+body{
+scroll-behavior:smooth;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      max-width: 900px;
-      margin: auto;
-    }
+/* NAVBAR */
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 50px;
+background:#f8f8f8;
+position:sticky;
+top:0;
+}
 
-    .card {
-      background: #222;
-      padding: 10px;
-      border-radius: 10px;
-    }
+nav ul{
+display:flex;
+list-style:none;
+gap:20px;
+}
 
-    img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+nav a{
+text-decoration:none;
+color:#333;
+font-weight:bold;
+}
 
-    .loading {
-      color: yellow;
-      font-size: 20px;
-    }
+.username{
+background:#e0f2ff;
+padding:5px 10px;
+border-radius:5px;
+}
 
-    .error {
-      color: red;
-    }
-  </style>
+/* HERO */
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:60px 80px;
+}
+
+.hero-left{
+max-width:500px;
+}
+
+.hero h1{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.hero button{
+padding:10px 20px;
+background:#4da6ff;
+border:none;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+.hero img{
+width:300px;
+}
+
+/* ACHIEVEMENTS */
+.achievements{
+background:#4da6ff;
+color:white;
+display:flex;
+justify-content:space-around;
+padding:20px;
+}
+
+/* SERVICES */
+.services{
+padding:50px;
+display:flex;
+gap:40px;
+}
+
+.left, .right{
+flex:1;
+}
+
+.service-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+}
+
+button{
+cursor:pointer;
+}
+
+.cart{
+background:#f2f2f2;
+padding:20px;
+border-radius:8px;
+}
+
+.total{
+margin-top:20px;
+font-weight:bold;
+}
+
+input{
+display:block;
+width:100%;
+margin:8px 0;
+padding:8px;
+}
+
+.confirmation{
+color:green;
+margin-top:10px;
+}
+
+/* QUALITY */
+.quality{
+display:flex;
+justify-content:space-around;
+padding:40px;
+background:#fafafa;
+}
+
+/* NEWSLETTER */
+.newsletter{
+background:#4da6ff;
+padding:30px;
+text-align:center;
+color:white;
+}
+
+.newsletter input{
+width:200px;
+display:inline-block;
+}
+
+/* FOOTER */
+footer{
+background:#333;
+color:white;
+padding:30px;
+text-align:center;
+}
+
+@media(max-width:768px){
+.hero{
+flex-direction:column;
+}
+.services{
+flex-direction:column;
+}
+}
+</style>
 </head>
 
 <body>
 
-<div id="root"></div>
+<!-- NAVBAR -->
+<nav>
+<div><b>Logo</b></div>
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+<div class="username">Username</div>
+</nav>
 
-<script type="text/babel">
+<!-- HERO -->
+<section class="hero">
+<div class="hero-left">
+<h1>Revitalize Your Clothes with Expert Laundry Services!</h1>
+<p>Premium dry cleaning & wash services.</p>
+<br>
+<button onclick="scrollToServices()">Book a Service Today</button>
+</div>
+<img src="https://media3.bsh-group.com/Product_Shots/25114476_WAJ24209IN_PGA4_def.webp">
+</section>
 
-const { useState, useEffect, useCallback } = React;
+<!-- ACHIEVEMENTS -->
+<div class="achievements">
+<div>15+ Laundry Services</div>
+<div>240+ Happy Customers</div>
+<div>2+ Years Experience</div>
+</div>
 
-// ✅ Custom Hook
-function useFetch(url) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+<!-- SERVICES -->
+<section class="services" id="services">
 
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(url);
+<div class="left">
+<h2>Our Services</h2><br>
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
+<div class="service-item">
+<span>Dry Cleaning - ₹200</span>
+<button onclick="addItem('Dry Cleaning',200)">Add</button>
+</div>
 
-      const result = await response.json();
-      setData(result);  // FIXED (no .data)
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [url]);
+<div class="service-item">
+<span>Wash & Fold - ₹100</span>
+<button onclick="addItem('Wash & Fold',100)">Add</button>
+</div>
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+<div class="service-item">
+<span>Ironing - ₹30</span>
+<button onclick="addItem('Ironing',30)">Add</button>
+</div>
 
-  return { data, loading, error };
+<div class="service-item">
+<span>Stain Removal - ₹500</span>
+<button onclick="addItem('Stain Removal',500)">Add</button>
+</div>
+
+</div>
+
+<div class="right cart">
+<h3>Added Items</h3>
+<div id="cartItems"></div>
+<div class="total">Total: ₹<span id="total">0</span></div>
+
+<h3>Book Now</h3>
+<input type="text" placeholder="Full Name">
+<input type="email" placeholder="Email">
+<input type="text" placeholder="Phone">
+<button onclick="bookNow()">Book Now</button>
+
+<div class="confirmation" id="confirmation"></div>
+
+</div>
+
+</section>
+
+<!-- QUALITY -->
+<section class="quality">
+<div>Premium Services</div>
+<div>Quick Support</div>
+<div>Hassle Free Delivery</div>
+<div>Affordable Prices</div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+<h3>Subscribe to our newsletter</h3>
+<input type="text" placeholder="Full Name">
+<input type="email" placeholder="Email">
+<button>Subscribe</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<p>© 2025 Laundry Service | All Rights Reserved</p>
+</footer>
+
+<script>
+
+let total = 0;
+
+function scrollToServices(){
+document.getElementById("services").scrollIntoView();
 }
 
-// ✅ Component
-function App() {
-  const { data, loading, error } = useFetch(
-    "https://api.escuelajs.co/api/v1/products"
-  );
+function addItem(name, price){
+let cart = document.getElementById("cartItems");
 
-  if (loading) return <p className="loading">Loading...</p>;
-  if (error) return <p className="error">Error: {error}</p>;
+let item = document.createElement("div");
+item.innerHTML = name + " - ₹" + price;
+cart.appendChild(item);
 
-  return (
-    <div>
-      <h1>Product Gallery</h1>
-      <div className="grid">
-        {data.slice(0, 8).map((item) => (
-          <div key={item.id} className="card">
-            <img src={item.images[0]} alt={item.title} />
-            <h3>{item.title}</h3>
-            <p>₹ {item.price}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+total += price;
+document.getElementById("total").innerText = total;
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+function bookNow(){
+document.getElementById("confirmation").innerText =
+"Thank you For Booking the Service We will get back to you soon!";
+}
 
 </script>
 
